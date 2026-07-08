@@ -55,7 +55,36 @@ Rekurentna neuronska mreža se prirodno nameće kao izbor zbog svoje efikasnosti
 
 ## Rezultati
 
+Rad [1] navodi statistike sledećih 11 modela:
 
+| Model | Osetljivost | Specifičnost | Tačnost |
+|---|---|---|---|
+| DisEMBL-465 | 0.4191 | 0.9503 | 0.7414 |
+| DisEMBL-hl | 0.5301 | 0.7206 | 0.6456 |
+| ESpritzD | 0.4197 | 0.9574 | 0.7459 |
+| ESpritzN | 0.6862 | 0.8081 | 0.7966 |
+| ESpritzX | 0.5714 | 0.9553 | 0.8043 |
+| FoldIndex | 0.6223 | 0.7593 | 0.7061 |
+| GlobPlot | 0.4073 | 0.9100 | 0.6952 |
+| IUPredL | 0.6442 | 0.9167 | 0.8056 |
+| IUPredS | 0.5496 | 0.9409 | 0.7870 |
+| JRONN | 0.7258 | 0.8125 | 0.7789 |
+| VSL2b | 0.8067 | 0.7750 | 0.7875 |
+
+Istrenirana su sledeća dva modela:
+
+| Model | Osetljivost | Specifičnost | Tačnost |
+|---|---|---|---|
+| 1D Conv. Model | 0.5702 | 0.8574 | 0.7342 |
+| LSTM Model | 0.6473 | 0.7946 | 0.7313 |
+
+![image info](./images/roc_curve.png)
+
+Istrenirani modeli se jedva razlikuju. Površina ispod ROC krive je za oba modela negde oko 0.76. Oba su, u odnosu na navedenih 11 modela, negde u sredini. Ovo je solidan rezulat, s obzirom da ti modeli koriste razne druge atribute konstruisane na osnovu domenskog znanja, dok naši koriste samo sekvencu aminokiselina.
+
+Najveća mana naših modela je što su previše rigidni, tj. ne reaguju dovoljno brzo na uređene/neuređene oblasti male dužine. To se u konvolutivnoj neuronskoj mreži može rešiti npr. smanjenjem dilatacije, mada rezulati na LSTM pokazuju da je gledanje širokog konteksta zaista bolji izbor. Dakle, iako ne reaguju na male oblasti, modeli imaju sposobnost da ostaju konzistentni na velikoj, pa time zaista predviđaju velike povezane oblasti, a ne samo nasumične niske nula i jedinica.
+
+Druga mana je što je skup podataka za treniranje bio relativno mali. Zbog toga, modeli su brzo iskonvergirali ka onome što su mogli da nauče. U budućnosti, kada bude otkriveno više uređenih/neuređenih regija, ovi modeli će imati veći skup podataka za treniranje i postaće jači.
 
 ## Reference
 
