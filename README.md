@@ -1,4 +1,4 @@
-# (Ab initio) Prediction of Intrinsicallz Disordered Regions in Proteins
+# (Ab initio) Prediction of Intrinsically Disordered Regions in Proteins
 
 Unutrašnje neuređeni proteini, ili unutrašnje poremećeni proteini (eng. *intrinsically disordered proteins*) su proteini kojima nedostaje uređena tercijarna (tj. trodimenzionalna) struktura. Slično, unutrašnje neuređene oblasti predstavljaju komponente unutar proteina bez specifične strukture. Takve oblasti su vrlo prisutne u svakom genomu i imaju ulogu u raznim biološkim procesima.
 
