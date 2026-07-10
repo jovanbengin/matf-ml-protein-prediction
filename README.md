@@ -21,7 +21,7 @@ Jovan Bengin 14/2022
 
 ## Skup podataka
 
-Postoje dva glavna izvora skupa podataka: **DisProt** (https://disprot.org/) [2] i **MobiDB** (https://mobidb.org/) [3]. Oba održava BiocomputingUP Lab Unverziteta u Padovi. 
+Postoje dva glavna izvora skupa podataka: **DisProt** (https://disprot.org/)[2] i **MobiDB** (https://mobidb.org/)[3]. Oba održava BiocomputingUP Lab Unverziteta u Padovi. 
 
 DisProt skup sastavljen je od ručno proverenih podataka. Zbog toga je vrlo precizan, ali i mali -- sadrži oko 3500 proteina. Takođe, neke proteinske regije nisu testirane, pa u skupu podataka postoje i regije za koje je klasifikacija nepoznata.
 
@@ -49,6 +49,8 @@ Motivacija za korišćenje ove mreže je što može da pokupi kontekst iz susedn
     
 Nakon toga, vrši se konačna konvolucija koja predstavlja spajanje svih kanala u jedan. 
 
+Optimalan broj konvolutivnih slojeva bira se u rasponu od 1 do 9, na osnovu površine ispod ROC krive na validacionom skupu.
+
 ### LSTM rekurentna neuronska mreža
 
 Rekurentna neuronska mreža se prirodno nameće kao izbor zbog svoje efikasnosti sa radom nad sekvencama. Model uzima sekvencu fiksne dužine, vrši embedding, nakon čega se primenjuje dvosmerni jednoslojni LSTM. Nakon toga se, za svaki vremenski trenutak (jer svaki odgovara nekoj aminokiselini) linearnim slojem sva skrivena stanja spajaju u jedno.
@@ -75,14 +77,16 @@ Istrenirana su sledeća dva modela:
 
 | Model | Osetljivost | Specifičnost | Tačnost |
 |---|---|---|---|
-| 1D Conv. Model | 0.5702 | 0.8574 | 0.7342 |
-| LSTM Model | 0.6473 | 0.7946 | 0.7313 |
+| 1D Conv. Model | 0.5950 | 0.8409 | 0.7353 |
+| LSTM Model | 0.5988 | 0.8348 | 0.7335 |
 
 ![image info](./images/roc_curve.png)
 
-Istrenirani modeli se jedva razlikuju. Površina ispod ROC krive je za oba modela negde oko 0.76. Oba su, u odnosu na navedenih 11 modela, negde u sredini. Ovo je solidan rezulat, s obzirom da ti modeli koriste razne druge atribute konstruisane na osnovu domenskog znanja, dok naši koriste samo sekvencu aminokiselina.
+Istrenirani modeli se jedva razlikuju. Površina ispod ROC krive je za oba modela približna $0.76$. Oba su, u odnosu na navedenih 11 modela, negde u sredini. Ovo je solidan rezulat, s obzirom da ti modeli koriste razne druge atribute konstruisane na osnovu domenskog znanja, dok naši koriste samo sekvencu aminokiselina.
 
-Najveća mana naših modela je što su previše rigidni, tj. ne reaguju dovoljno brzo na uređene/neuređene oblasti male dužine. To se u konvolutivnoj neuronskoj mreži može rešiti npr. smanjenjem dilatacije, mada rezulati na LSTM pokazuju da je gledanje širokog konteksta zaista bolji izbor. Dakle, iako ne reaguju na male oblasti, modeli imaju sposobnost da ostaju konzistentni na velikoj, pa time zaista predviđaju velike povezane oblasti, a ne samo nasumične niske nula i jedinica.
+Optimalan broj konvolutivnih slojeva ispostavlja se da je $4$, što daje kontekst veličine $61$. Drugim rečima, odluka o uređenosti aminokiselina većinski se zasniva na kontekstu širine oko $60$. Dakle, kontekst definitivno ima uticaj, ali ne preširok kontekst.
+
+Najveća mana naših modela je što su previše rigidni, tj. ne reaguju dovoljno brzo na uređene/neuređene oblasti male dužine. To se u konvolutivnoj neuronskoj mreži može rešiti npr. smanjenjem dilatacije, mada rezulati izbora hiperparametra pokazuju da se gledanjem širokog konteksta zaista postiže bolji rezultat. Dakle, iako ne reaguju na male oblasti, modeli imaju sposobnost da ostaju konzistentni na velikoj, pa time zaista predviđaju velike povezane oblasti, a ne samo nasumične niske nula i jedinica.
 
 Druga mana je što je skup podataka za treniranje bio relativno mali. Zbog toga, modeli su brzo iskonvergirali ka onome što su mogli da nauče. U budućnosti, kada bude otkriveno više uređenih/neuređenih regija, ovi modeli će imati veći skup podataka za treniranje i postaće jači.
 
