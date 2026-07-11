@@ -21,7 +21,7 @@ Jovan Bengin 14/2022
 
 ## Skup podataka
 
-Postoje dva glavna izvora skupa podataka: **DisProt** (https://disprot.org/)[2] i **MobiDB** (https://mobidb.org/)[3]. Oba održava BiocomputingUP Lab Unverziteta u Padovi. 
+Postoje dva glavna izvora skupa podataka: **DisProt** (https://disprot.org/) [2] i **MobiDB** (https://mobidb.org/) [3]. Oba održava BiocomputingUP Lab Unverziteta u Padovi. 
 
 DisProt skup sastavljen je od ručno proverenih podataka. Zbog toga je vrlo precizan, ali i mali -- sadrži oko 3500 proteina. Takođe, neke proteinske regije nisu testirane, pa u skupu podataka postoje i regije za koje je klasifikacija nepoznata.
 
